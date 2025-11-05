@@ -4,26 +4,43 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | El mundo de Wumpus</title>
+
+    <!-- 🔹 Ajuste global de estilos -->
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background-color: black;
+      }
+
+      #unity-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url('Build/El mundo de Wumpus.jpg') center / cover no-repeat;
+      }
+    </style>
   </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=1366 height=768 style="width: 1366px; height: 768px; background: url('Build/El mundo de Wumpus.jpg') center / cover"></canvas>
+
+  <body>
+    <!-- 🔹 Canvas ajustable -->
+    <canvas id="unity-canvas"></canvas>
+
     <script src="Build/El mundo de Wumpus.loader.js"></script>
     <script>
+      // 🔹 Configuración para móviles (mantiene proporción)
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
         document.getElementsByTagName('head')[0].appendChild(meta);
-
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
-
-        document.body.style.textAlign = "left";
       }
 
+      // 🔹 Crear instancia Unity con auto-ajuste
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/El mundo de Wumpus.data",
         frameworkUrl: "Build/El mundo de Wumpus.framework.js",
@@ -32,8 +49,12 @@
         companyName: "Link's Studio",
         productName: "El mundo de Wumpus",
         productVersion: "1.0",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+        matchWebGLToCanvasSize: true, // Asegura que el render se adapte al tamaño del canvas
+      }).then((unityInstance) => {
+        // 🔹 Opcional: reajusta el tamaño si se cambia la ventana
+        window.addEventListener('resize', () => {
+          unityInstance.SendMessage("GameManager", "OnResize");
+        });
       });
     </script>
   </body>
