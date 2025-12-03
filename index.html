@@ -1,53 +1,54 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>El mundo de Wumpus</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>El mundo de Wumpus</title>
 
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
 
-      #unity-canvas {
-        width: 100vw;
-        height: 100vh;
-        display: block;
-        background: url('Build/El-mundo-de-Wumpus-Online.jpg') center / cover no-repeat;
-      }
-    </style>
-  </head>
+    #unity-canvas {
+      width: 100vw;
+      height: 100dvh;
+      display: block;
+      background: url('Build/El-mundo-de-Wumpus-Online.jpg') center/cover no-repeat;
+    }
+  </style>
+</head>
 
-  <body>
-    <canvas id="unity-canvas"></canvas>
+<body>
+  <canvas id="unity-canvas"></canvas>
 
-    <script src="Build/El-mundo-de-Wumpus-Online.loader.js"></script>
-    <script>
-      // Ajustes móviles
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.head.appendChild(meta);
-      }
+  <script src="Build/El-mundo-de-Wumpus-Online.loader.js"></script>
+  <script>
+    // Ajuste recomendado para móviles
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      const meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content =
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+      document.head.appendChild(meta);
+    }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/El-mundo-de-Wumpus-Online.data",
-        frameworkUrl: "Build/El-mundo-de-Wumpus-Online.framework.js",
-        codeUrl: "Build/El-mundo-de-Wumpus-Online.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "Link's Studio",
-        productName: "El mundo de Wumpus",
-        productVersion: "1.0",
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+      dataUrl: "Build/El-mundo-de-Wumpus-Online.data",
+      frameworkUrl: "Build/El-mundo-de-Wumpus-Online.framework.js",
+      codeUrl: "Build/El-mundo-de-Wumpus-Online.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Link's Studio",
+      productName: "El mundo de Wumpus",
+      productVersion: "1.0",
 
-        // 🔥 Hace que Unity ajuste su tamaño interno al tamaño del canvas en pantalla
-        matchWebGLToCanvasSize: true,
-      });
-    </script>
-  </body>
+      matchWebGLToCanvasSize: true,
+      devicePixelRatio: 1
+    });
+  </script>
+</body>
 </html>
